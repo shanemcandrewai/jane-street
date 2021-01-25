@@ -24,3 +24,4 @@ https://www.kaggle.com/c/jane-street-market-prediction
     pi = tra.groupby(['date']).sum().pj
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
+    corr = tra.corr()
