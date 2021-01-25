@@ -1,12 +1,16 @@
 # Jane Street Market Prediction
 https://www.kaggle.com/c/jane-street-market-prediction
+## Windows
+### Create link to folder on another drive (may need admin privilidages)
+[Soft links](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
+    D:\kaggle>mklink /J Scripts c:\Users\mcandrs\dev\venv\3.8\Scripts\
 ## pandas environment
 ### [Accelerated operations](https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html?highlight=numexpr#accelerated-operations)
     pip install numexpr
     pip install bottleneck
 [bottleneck Python version < 3.9](https://pypi.org/project/Bottleneck/)
 ### ipython
-#### Error
+#### jedi error
       File "/home/shane/dev/venv/3.8/lib/python3.8/site-packages/jedi/api/__init__.py", line 725, in __init__
         super().__init__(code, environment=environment,
     TypeError: __init__() got an unexpected keyword argument 'column'
@@ -14,6 +18,12 @@ https://www.kaggle.com/c/jane-street-market-prediction
 [Last jedi release (0.18.0) is incompatible with ipython](https://github.com/ipython/ipython/issues/12740)
 ##### solution
     pip install jedi==0.17.2
+#### Exception [WinError 995] error
+    Exception [WinError 995] The I/O operation has been aborted because of either a thread exit or an application request
+##### git issue
+[WinError 995](https://github.com/ipython/ipython/issues/12049)
+##### solution
+    pip install --upgrade prompt-toolkit==2.0.10
 ### pandas
 ## Evaluation
     import pandas as pd
@@ -22,8 +32,8 @@ https://www.kaggle.com/c/jane-street-market-prediction
     tra.drop(['resp_1', 'resp_2', 'resp_3', 'resp_4'], axis=1, inplace=True)
     tra.drop(tra[(tra.weight == 0)].index, inplace=True)
     corr.resp.sort_values(ascending=False)
-    tra[(tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_37 < 0) & (tra.feature_17 < 0)]
-    tra['action'] = np.where(tra.resp > 0, 1, 0)
+    tra[(tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_51 < 0) & (tra.feature_50 < 0)]
+    tra['action'] = np.where(((tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_37 < 0) & (tra.feature_17 < 0)), 1, 0)
     tra['pj'] = tra.weight * tra.resp * tra.action
     pi = tra.groupby(['date']).sum().pj
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
