@@ -25,7 +25,7 @@ https://www.kaggle.com/c/jane-street-market-prediction
 ##### solution
     pip install --upgrade prompt-toolkit==2.0.10
 ### pandas
-## Evaluation
+## Preparation
     import pandas as pd
     import numpy as np
     tra = pd.read_csv('jane-street-market-prediction/train.csv')
@@ -39,3 +39,11 @@ https://www.kaggle.com/c/jane-street-market-prediction
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
     corr = tra.corr()
+## Evaluation
+    import janestreet
+    env = janestreet.make_env() # initialize the environment
+    iter_test = env.iter_test() # an iterator which loops over the test set
+
+    for (test_df, sample_prediction_df) in iter_test:
+      sample_prediction_df.action = np.where(((test_df.feature_27 > 0) & (test_df.feature_31 > 0) & (test_df.feature_37 < 0) & (test_df.feature_17 < 0)), 1, 0)
+      env.predict(sample_prediction_df)
