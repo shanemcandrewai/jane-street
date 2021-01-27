@@ -1,8 +1,7 @@
 # Jane Street Market Prediction
 https://www.kaggle.com/c/jane-street-market-prediction
 ## Windows
-### Create link to folder on another drive (may need admin privilidages)
-[Soft links](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux/)
+### Create a [link](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux) to folder on another drive (may need admin privilidages)
     D:\kaggle>mklink /J Scripts c:\Users\mcandrs\dev\venv\3.8\Scripts\
 ## pandas environment
 ### [Accelerated operations](https://pandas.pydata.org/pandas-docs/stable/user_guide/basics.html?highlight=numexpr#accelerated-operations)
@@ -31,6 +30,7 @@ https://www.kaggle.com/c/jane-street-market-prediction
     tra = pd.read_csv('jane-street-market-prediction/train.csv')
     tra.drop(['resp_1', 'resp_2', 'resp_3', 'resp_4'], axis=1, inplace=True)
     tra.drop(tra[(tra.weight == 0)].index, inplace=True)
+    corr = tra.corr()
     corr.resp.sort_values(ascending=False)
     tra[(tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_51 < 0) & (tra.feature_50 < 0)]
     tra['action'] = np.where(((tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_37 < 0) & (tra.feature_17 < 0)), 1, 0)
@@ -38,7 +38,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
     pi = tra.groupby(['date']).sum().pj
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
-    corr = tra.corr()
 ## Evaluation
     import janestreet
     env = janestreet.make_env() # initialize the environment
