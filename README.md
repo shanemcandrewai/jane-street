@@ -46,16 +46,13 @@ https://www.kaggle.com/c/jane-street-market-prediction
     from sklearn.model_selection import train_test_split
     X = pd.read_csv('jane-street-market-prediction/train.csv')
     w = X['weight']
-    y = np.where((X.resp > 0) & (X.weight > 0), 1, 0)
+    y = np.where((X.resp > 0.05) & (X.weight > 0), 1, 0)
     X.drop(['date', 'weight', 'resp_1', 'resp_2', 'resp_3', 'resp_4', 'resp', 'ts_id'], axis=1, inplace=True)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
     X_train, X_test, y_train, y_test, w_train, w_test = train_test_split(X, y, w, test_size=0.2, random_state=0)
     del X, y, w
-    clf = HistGradientBoostingClassifier().fit(X_train, y_train)
-    clf.score(X_test, y_test)
-    gb = HistGradientBoostingClassifier(min_samples_leaf=1)
-    gb.fit(X_train, y_train, sample_weight=w_train)
-    gb.predict(X_test)
+    gbc = HistGradientBoostingClassifier().fit(X_train, y_train, w_train)
+    gbc.score(X_test, y_test)
+    gbc.predict(X_test)
 ### [Dockerfile](https://github.com/Kaggle/docker-python/blob/master/Dockerfile)
 #### b/176817038 avoid upgrade to 0.24 which is causing issues with hep-ml package.
     pip install scikit-learn==0.23.2 && \
