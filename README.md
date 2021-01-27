@@ -39,11 +39,16 @@ https://www.kaggle.com/c/jane-street-market-prediction
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
 ## HistGradientBoostingRegressor
+    import pandas as pd
+    import numpy as np
     from sklearn.experimental import enable_hist_gradient_boosting
     from sklearn.ensemble import HistGradientBoostingRegressor
+    X = pd.read_csv('jane-street-market-prediction/train.csv')
+    y = X['resp']
+    X.drop(['date', 'resp_1', 'resp_2', 'resp_3', 'resp_4', 'resp', 'ts_id'], axis=1, inplace=True)
     X_train, X_test = X[:1992075], X[1992075:]
     y_train, y_test = y[:1992075], y[1992075:]
-    clf = HistGradientBoostingClassifier().fit(X_train, y_train)
+    clf = HistGradientBoostingRegressor().fit(X_train, y_train)
 ### [Dockerfile](https://github.com/Kaggle/docker-python/blob/master/Dockerfile)
 #### b/176817038 avoid upgrade to 0.24 which is causing issues with hep-ml package.
     pip install scikit-learn==0.23.2 && \
