@@ -38,6 +38,11 @@ https://www.kaggle.com/c/jane-street-market-prediction
     pi = tra.groupby(['date']).sum().pj
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
+## Kaggle notebook errors
+### [Exception: You can only call `make_env()` once.](https://www.kaggle.com/c/jane-street-market-prediction/discussion/204958)
+#### Solution
+    janestreet.make_env.__called__ = False
+
 ## HistGradientBoostingRegressor
     import pandas as pd
     import numpy as np
