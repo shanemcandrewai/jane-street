@@ -1,5 +1,8 @@
 # Jane Street Market Prediction
 https://www.kaggle.com/c/jane-street-market-prediction
+## update main Python packages
+    python -m pip install -U pip
+    pip install -U numpy pandas scikit-learn ipython
 ## Windows
 ### Create a [link](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux) to folder on another drive (may need admin privileges)
     D:\kaggle>mklink /J Scripts c:\Users\mcandrs\dev\venv\3.8\Scripts\
@@ -42,7 +45,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
 ### [Exception: You can only call `make_env()` once.](https://www.kaggle.com/c/jane-street-market-prediction/discussion/204958)
 #### Solution
     janestreet.make_env.__called__ = False
-
 ## HistGradientBoostingRegressor
     import pandas as pd
     import numpy as np
