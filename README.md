@@ -86,3 +86,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
 ### Replace NaN with column mean
     from sklearn.impute import SimpleImputer
     X = pd.DataFrame(SimpleImputer().fit_transform(X), columns=X.columns)
+#### Linear Discriminant Analysis (dimension reduction)
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+    X = LinearDiscriminantAnalysis().fit_transform(X, y)
