@@ -71,3 +71,18 @@ https://www.kaggle.com/c/jane-street-market-prediction
     for (test_df, sample_prediction_df) in iter_test:
       sample_prediction_df.action = np.where(((test_df.feature_27 > 0) & (test_df.feature_31 > 0) & (test_df.feature_37 < 0) & (test_df.feature_17 < 0)), 1, 0)
       env.predict(sample_prediction_df)
+## Missing values
+### Fast CSV read
+    import pandas as pd
+    import numpy as np
+    import datatable as dt
+    X = dt.fread('/kaggle/input/jane-street-market-prediction/train.csv', verbose=True).to_pandas()
+### Split training set into features X and labels y
+    y = np.where((X.resp > 0), 1, 0)
+    no_train_cols = ['date', 'resp_1', 'resp_2', 'resp_3', 'resp_4', 'resp', 'ts_id']
+    X.drop(no_train_cols, axis=1, inplace=True)
+### Count number of NaN
+    X.isna().sum().sum()
+### Replace NaN with column mean
+    from sklearn.impute import SimpleImputer
+    X = pd.DataFrame(SimpleImputer().fit_transform(X), columns=X.columns)
