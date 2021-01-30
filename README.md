@@ -37,10 +37,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
     corr.resp.sort_values(ascending=False)
     tra[(tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_51 < 0) & (tra.feature_50 < 0)]
     tra['action'] = np.where(((tra.feature_27 > 0) & (tra.feature_31 > 0) & (tra.feature_37 < 0) & (tra.feature_17 < 0)), 1, 0)
-    tra['pj'] = tra.weight * tra.resp * tra.action
-    pi = tra.groupby(['date']).sum().pj
-    t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
-    u = min(max(t, 0), 6) * pi.sum()
 ## Kaggle notebook errors
 ### [Exception: You can only call `make_env()` once.](https://www.kaggle.com/c/jane-street-market-prediction/discussion/204958)
 #### Solution
@@ -89,3 +85,12 @@ https://www.kaggle.com/c/jane-street-market-prediction
 #### Linear Discriminant Analysis (dimension reduction)
     from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
     X = LinearDiscriminantAnalysis().fit_transform(X, y)
+### Utility score
+    import pandas as pd
+    import numpy as np
+    import datatable as dt
+    X = dt.fread('jane-street-market-prediction/train.csv', verbose=True).to_pandas()
+    X['pj'] = X.weight * X.resp
+    pi = X.groupby(['date']).sum().pj
+    t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
+    u = min(max(t, 0), 6) * pi.sum()
