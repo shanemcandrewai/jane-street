@@ -85,7 +85,7 @@ https://www.kaggle.com/c/jane-street-market-prediction
 #### Linear Discriminant Analysis (dimension reduction)
     from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
     X = LinearDiscriminantAnalysis().fit_transform(X, y)
-### Utility score
+## Utility score
     import pandas as pd
     import numpy as np
     import datatable as dt
@@ -94,3 +94,7 @@ https://www.kaggle.com/c/jane-street-market-prediction
     pi = X.groupby(['date']).pj.sum()
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
+## y filter
+    w75 = X[(X.resp > 0) & (X.weight > 0)].quantile(.75).weight
+    r25 = X[X.resp > 0].quantile(.25).resp
+    y = np.where((X.resp > r25) & (X.weight < w75), 1, 0)
