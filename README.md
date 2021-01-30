@@ -91,6 +91,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
     import datatable as dt
     X = dt.fread('jane-street-market-prediction/train.csv', verbose=True).to_pandas()
     X['pj'] = X.weight * X.resp
-    pi = X.groupby(['date']).sum().pj
+    pi = X.groupby(['date']).pj.sum()
     t = pi.sum()/((pi**2).sum()**0.5) * (250/pi.count())**0.5
     u = min(max(t, 0), 6) * pi.sum()
