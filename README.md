@@ -2,7 +2,10 @@
 https://www.kaggle.com/c/jane-street-market-prediction
 ## update main Python packages
     python -m pip install -U pip
-    pip install -U numpy pandas scikit-learn ipython
+    pip install -U numpy pandas ipython
+## Install scikit-learn version compatable with [Dockerfile](https://github.com/Kaggle/docker-python/blob/master/Dockerfile)
+#### b/176817038 avoid upgrade to 0.24 which is causing issues with hep-ml package.
+    pip install scikit-learn==0.23.2
 ## Windows
 ### Create a [link](https://www.howtogeek.com/howto/16226/complete-guide-to-symbolic-links-symlinks-on-windows-or-linux) to folder on another drive (may need admin privileges)
     D:\kaggle>mklink /J Scripts c:\Users\mcandrs\dev\venv\3.8\Scripts\
@@ -56,9 +59,6 @@ https://www.kaggle.com/c/jane-street-market-prediction
     gbc = HistGradientBoostingClassifier().fit(X_train, y_train, w_train)
     gbc.score(X_test, y_test)
     gbc.predict(X_test)
-### [Dockerfile](https://github.com/Kaggle/docker-python/blob/master/Dockerfile)
-#### b/176817038 avoid upgrade to 0.24 which is causing issues with hep-ml package.
-    pip install scikit-learn==0.23.2 && \
 ## Evaluation
     import janestreet
     env = janestreet.make_env() # initialize the environment
